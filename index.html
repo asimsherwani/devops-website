@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="A practical DevOps field guide for Git, GitHub, AWS EC2, Ubuntu and Nginx.">
-    <title>DevOps Practice Lab | Git to Production</title>
+    <title>PSEB Batch-5 DevOps | Pipeline Practice Completed</title>
     <style>
         :root {
             --ink: #14221d;
@@ -109,15 +109,15 @@
     <main>
         <section class="shell hero">
             <div>
-                <div class="eyebrow">Field notes · v4.0 · 25 Aug 2026</div>
-                <h1>Ship it.<br>Understand it.</h1>
-                <p>A hands-on DevOps practice space covering the path from a local Git change to a live Nginx site on AWS EC2.</p>
+                <div class="eyebrow">PSEB Batch-5 · DevOps practice</div>
+                <h1>PSEB Batch-5<br>DevOps</h1>
+                <p>Pipeline practice has been completed: from a local Git change to a live Nginx site on AWS EC2.</p>
             </div>
             <aside class="hero-panel">
-                <div class="panel-label">Latest deployment</div>
-                <strong>Pipeline push complete</strong>
+                <div class="panel-label">Practice status</div>
+                <strong>Pipeline practice completed</strong>
                 <p>GitHub workflow connected. Production is running on Ubuntu with Nginx.</p>
-                <div class="terminal">$ git push origin main<br><span style="color:#f28b50">&gt; deployment successful</span></div>
+                <div class="terminal">$ git push origin main<br><span style="color:#f28b50">&gt; pipeline practice complete</span></div>
             </aside>
         </section>
 
@@ -130,7 +130,7 @@
                             <source src="deployment-flow.webm" type="video/webm">
                             Your browser does not support the deployment film.
                         </video>
-                        <div class="film-caption">DEPLOYMENT FLOW / 00:15 / PLAY WITH SOUND OFF</div>
+                        <div class="film-caption">DEPLOYMENT FLOW / 00:15 / LIGHT MUSIC PLAYS ON START</div>
                     </div>
                     <div class="phase-list" aria-label="Deployment phases">
                         <div class="phase"><b>01</b><div><strong>Commit</strong><span>Capture a clean change</span></div></div>
@@ -188,5 +188,37 @@
     </main>
 
     <footer class="shell"><strong>DEVOPS / PRACTICE LAB</strong><span>Built, committed, and deployed with intention.</span></footer>
+    <script>
+        const deploymentVideo = document.querySelector('.film-frame video');
+        let deploymentMusic;
+        let musicTimer;
+        const notes = [261.63, 329.63, 392, 523.25, 392, 329.63, 293.66, 349.23, 440, 587.33, 440, 349.23];
+
+        function playLightMusic() {
+            const audio = deploymentMusic || (deploymentMusic = new AudioContext());
+            audio.resume();
+            let noteIndex = 0;
+            const playNote = () => {
+                const oscillator = audio.createOscillator();
+                const gain = audio.createGain();
+                const now = audio.currentTime;
+                oscillator.type = 'sine';
+                oscillator.frequency.value = notes[noteIndex++ % notes.length];
+                gain.gain.setValueAtTime(0.0001, now);
+                gain.gain.linearRampToValueAtTime(0.025, now + 0.08);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.05);
+                oscillator.connect(gain).connect(audio.destination);
+                oscillator.start(now);
+                oscillator.stop(now + 1.1);
+            };
+            playNote();
+            clearInterval(musicTimer);
+            musicTimer = setInterval(playNote, 1250);
+        }
+
+        deploymentVideo.addEventListener('play', playLightMusic);
+        deploymentVideo.addEventListener('pause', () => clearInterval(musicTimer));
+        deploymentVideo.addEventListener('ended', () => clearInterval(musicTimer));
+    </script>
 </body>
 </html>
