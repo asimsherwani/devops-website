@@ -1,26 +1,158 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>My DevOps Website ver 4.0, configured github workflow, update automatically on AWS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A practical DevOps field guide for Git, GitHub, AWS EC2, Ubuntu and Nginx.">
+    <title>DevOps Practice Lab | Git to Production</title>
+    <style>
+        :root {
+            --ink: #14221d;
+            --muted: #65736d;
+            --paper: #f5f7f2;
+            --white: #ffffff;
+            --line: #dfe7df;
+            --green: #19734b;
+            --lime: #c9f36d;
+            --orange: #f28b50;
+            --shadow: 0 18px 45px rgba(20, 34, 29, .09);
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: var(--paper);
+            font-family: Georgia, 'Times New Roman', serif;
+            line-height: 1.55;
+        }
+        .shell { width: min(1120px, calc(100% - 40px)); margin: auto; }
+        .topbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 24px 0; font-family: 'Trebuchet MS', sans-serif;
+        }
+        .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .02em; }
+        .mark { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 8px; background: var(--ink); color: var(--lime); font: bold 18px monospace; }
+        nav { display: flex; gap: 24px; font-size: 13px; font-weight: 700; }
+        nav a { color: var(--muted); text-decoration: none; }
+        nav a:hover { color: var(--green); }
+        .hero { padding: 72px 0 82px; display: grid; grid-template-columns: 1.25fr .75fr; gap: 70px; align-items: end; }
+        .eyebrow { color: var(--green); font: 700 12px 'Trebuchet MS', sans-serif; letter-spacing: .16em; text-transform: uppercase; }
+        h1 { max-width: 750px; margin: 14px 0 22px; font-size: clamp(48px, 7vw, 88px); line-height: .96; letter-spacing: -.055em; font-weight: 500; }
+        .hero p { max-width: 560px; color: var(--muted); font-size: 19px; }
+        .hero-panel { padding: 25px; background: var(--ink); color: white; border-radius: 10px; box-shadow: var(--shadow); transform: rotate(2deg); }
+        .panel-label { color: var(--lime); font: 700 11px monospace; letter-spacing: .12em; text-transform: uppercase; }
+        .hero-panel strong { display: block; margin: 18px 0 8px; font-size: 28px; font-weight: 500; }
+        .hero-panel p { margin: 0; color: #c1ccc5; font-size: 14px; }
+        .terminal { margin-top: 22px; padding: 16px; border-top: 1px solid #43544b; color: var(--lime); font: 13px/1.8 monospace; }
+        section { padding: 78px 0; border-top: 1px solid var(--line); }
+        .section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 30px; }
+        h2 { margin: 0; font-size: 42px; line-height: 1; font-weight: 500; letter-spacing: -.04em; }
+        .section-head p { max-width: 420px; margin: 0; color: var(--muted); }
+        .stack { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+        .stack article { min-height: 150px; padding: 19px; background: var(--white); border: 1px solid var(--line); border-radius: 8px; }
+        .stack .number { color: var(--orange); font: 700 12px monospace; }
+        .stack h3 { margin: 38px 0 4px; font-size: 19px; }
+        .stack p { margin: 0; color: var(--muted); font: 12px 'Trebuchet MS', sans-serif; }
+        .workflow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+        .step { padding: 23px; background: var(--white); border-radius: 8px; box-shadow: 0 3px 0 var(--line); }
+        .step small { color: var(--green); font: 700 11px monospace; }
+        .step h3 { margin: 25px 0 8px; font-size: 20px; }
+        .step code, .command code { display: block; overflow-x: auto; color: var(--green); font: 13px/1.5 monospace; white-space: nowrap; }
+        .commands { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .command { display: grid; grid-template-columns: 125px 1fr; gap: 18px; align-items: start; padding: 18px 20px; background: var(--white); border: 1px solid var(--line); border-radius: 7px; }
+        .command h3 { margin: 0; font: 700 13px 'Trebuchet MS', sans-serif; }
+        .command p { grid-column: 2; margin: -8px 0 0; color: var(--muted); font-size: 13px; }
+        footer { padding: 34px 0 42px; display: flex; justify-content: space-between; color: var(--muted); font: 12px 'Trebuchet MS', sans-serif; }
+        footer strong { color: var(--ink); }
+        @media (max-width: 800px) {
+            .hero { grid-template-columns: 1fr; gap: 24px; padding-top: 45px; }
+            .hero-panel { transform: none; max-width: 480px; }
+            .stack { grid-template-columns: repeat(2, 1fr); }
+            .workflow { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 560px) {
+            .shell { width: min(100% - 28px, 1120px); }
+            nav { gap: 12px; }
+            nav a:first-child { display: none; }
+            h1 { font-size: 54px; }
+            h2 { font-size: 34px; }
+            .section-head { display: block; }
+            .section-head p { margin-top: 14px; }
+            .commands, .workflow { grid-template-columns: 1fr; }
+            .command { grid-template-columns: 1fr; gap: 8px; }
+            .command p { grid-column: 1; margin: 0; }
+            footer { display: block; }
+            footer span { display: block; margin-top: 8px; }
+        }
+    </style>
 </head>
-
 <body>
+    <header class="shell topbar">
+        <div class="brand"><span class="mark">&gt;_</span> DEVOPS / PRACTICE LAB</div>
+        <nav><a href="#stack">STACK</a><a href="#workflow">WORKFLOW</a><a href="#commands">GIT COMMANDS</a></nav>
+    </header>
 
-    <h1>Hello DevOps! This 4th pipeline push DONE</h1>
+    <main>
+        <section class="shell hero">
+            <div>
+                <div class="eyebrow">Field notes · v4.0 · 25 Aug 2026</div>
+                <h1>Ship it.<br>Understand it.</h1>
+                <p>A hands-on DevOps practice space covering the path from a local Git change to a live Nginx site on AWS EC2.</p>
+            </div>
+            <aside class="hero-panel">
+                <div class="panel-label">Latest deployment</div>
+                <strong>Pipeline push complete</strong>
+                <p>GitHub workflow connected. Production is running on Ubuntu with Nginx.</p>
+                <div class="terminal">$ git push origin main<br><span style="color:#f28b50">&gt; deployment successful</span></div>
+            </aside>
+        </section>
 
-    <h2>Website updated August 25-2026 03:05pm </h2>
+        <section id="stack">
+            <div class="shell">
+                <div class="section-head"><h2>The stack</h2><p>Five dependable layers, each doing one job in the journey from source to server.</p></div>
+                <div class="stack">
+                    <article><div class="number">01 / SOURCE</div><h3>Git</h3><p>Version control</p></article>
+                    <article><div class="number">02 / COLLAB</div><h3>GitHub</h3><p>Remote repository</p></article>
+                    <article><div class="number">03 / CLOUD</div><h3>AWS EC2</h3><p>Compute instance</p></article>
+                    <article><div class="number">04 / OS</div><h3>Ubuntu</h3><p>Server environment</p></article>
+                    <article><div class="number">05 / WEB</div><h3>Nginx</h3><p>Web server</p></article>
+                </div>
+            </div>
+        </section>
 
-    <p>This website is deployed using:</p>
+        <section id="workflow">
+            <div class="shell">
+                <div class="section-head"><h2>Commit to live</h2><p>The repeatable loop behind every small improvement.</p></div>
+                <div class="workflow">
+                    <article class="step"><small>01 / MAKE</small><h3>Change locally</h3><code>git status<br>git diff</code></article>
+                    <article class="step"><small>02 / RECORD</small><h3>Save the work</h3><code>git add .<br>git commit -m "..."</code></article>
+                    <article class="step"><small>03 / SHARE</small><h3>Push upstream</h3><code>git push origin main</code></article>
+                    <article class="step"><small>04 / SERVE</small><h3>Deploy confidently</h3><code>GitHub → AWS EC2<br>→ Nginx</code></article>
+                </div>
+            </div>
+        </section>
 
-    <ul>
-        <li>Git</li>
-        <li>GitHub</li>
-        <li>AWS EC2</li>
-        <li>Ubuntu</li>
-        <li>Nginx</li>
-    </ul>
+        <section id="commands">
+            <div class="shell">
+                <div class="section-head"><h2>Git practice kit</h2><p>The commands used across a practical repository workflow, from setup to recovery.</p></div>
+                <div class="commands">
+                    <article class="command"><h3>Configure identity</h3><code>git config --global user.name "Name"<br>git config --global user.email "email"</code><p>Set the author attached to your commits.</p></article>
+                    <article class="command"><h3>Start or copy</h3><code>git init<br>git clone &lt;repository-url&gt;</code><p>Create a repository or bring down an existing one.</p></article>
+                    <article class="command"><h3>Inspect changes</h3><code>git status<br>git diff<br>git log --oneline</code><p>See what changed and how the project evolved.</p></article>
+                    <article class="command"><h3>Stage and commit</h3><code>git add .<br>git commit -m "message"</code><p>Prepare a snapshot and record it with a clear message.</p></article>
+                    <article class="command"><h3>Branches</h3><code>git branch<br>git switch -c feature/name<br>git switch main</code><p>Explore work safely in focused branches.</p></article>
+                    <article class="command"><h3>Sync remote</h3><code>git remote -v<br>git pull origin main<br>git push origin main</code><p>Connect, update, and publish the main branch.</p></article>
+                    <article class="command"><h3>Combine work</h3><code>git merge feature/name<br>git rebase main</code><p>Bring a completed branch into the current line.</p></article>
+                    <article class="command"><h3>Recover cleanly</h3><code>git restore .<br>git stash<br>git stash pop</code><p>Discard or temporarily shelve local changes.</p></article>
+                    <article class="command"><h3>Undo carefully</h3><code>git revert &lt;commit&gt;<br>git reset --soft HEAD~1</code><p>Reverse a published change or revise the latest local commit.</p></article>
+                    <article class="command"><h3>Mark a release</h3><code>git tag v1.0.0<br>git push origin v1.0.0</code><p>Label a stable point and publish the release marker.</p></article>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    <p>Version 1.0</p>
-
+    <footer class="shell"><strong>DEVOPS / PRACTICE LAB</strong><span>Built, committed, and deployed with intention.</span></footer>
 </body>
 </html>
