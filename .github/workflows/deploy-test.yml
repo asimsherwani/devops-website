@@ -1,4 +1,4 @@
-name: Deploy Test Website to AWS
+name: Deploy Test Website to AWS for DevOps practice
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy Test Branch to AWS EC2
+      - name: Deploy Test Branch to AWS EC2 for DevOps practice
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SERVER_HOST }}
