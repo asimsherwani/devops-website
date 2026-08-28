@@ -1,0 +1,22 @@
+name: Deploy Test Website to AWS
+
+on:
+  push:
+    branches:
+      - Test-Devops2
+
+jobs:
+  deploy-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy Test Branch to AWS EC2
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
+          script: |
+            cd /var/www/devops-test
+            git pull origin Test-Devops2
