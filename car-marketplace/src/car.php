@@ -24,6 +24,10 @@ if (!$car) {
 /* Get all uploaded pictures for this car */
 
 $carImages = [];
+
+$imageStmt = $conn->prepare(
+    "SELECT image_path
+     FROM car_images
      WHERE car_id = ?
      ORDER BY id ASC"
 );
