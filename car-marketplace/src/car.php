@@ -21,6 +21,33 @@ if (!$car) {
     die("Vehicle not found.");
 }
 
+/* Get all uploaded pictures for this car */
+
+$carImages = [];
+     WHERE car_id = ?
+     ORDER BY id ASC"
+);
+
+if ($imageStmt) {
+    $imageStmt->bind_param("i", $id);
+    $imageStmt->execute();
+
+    $imageResult = $imageStmt->get_result();
+
+    while ($imageRow = $imageResult->fetch_assoc()) {
+        $carImages[] = $imageRow['image_path'];
+    }
+}
+
+/*
+ * Existing demo cars do not have records in car_images,
+ * so use their existing main image.
+ */
+if (empty($carImages) && !empty($car['image'])) {
+    $carImages[] = $car['image'];
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +59,7 @@ if (!$car) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>
-<?= htmlspecialchars($car['make'] . ' ' . $car['model']) ?> | AutoDrive
+<?= htmlspecialchars($car['make'] . ' ' . $car['model']) ?> | DriveDeal.pk
 </title>
 
 <link rel="stylesheet" href="style.css">
@@ -45,14 +72,14 @@ if (!$car) {
 
 <div class="container nav">
 
-    <div class="logo">
-        Auto<span>Drive</span>
-    </div>
+    <a href="index.php" class="brand-logo">
+    <img src="logo.png" alt="DriveDeal.pk">
+</a>
 
     <nav>
         <a href="index.php">Home</a>
         <a href="index.php#cars">Buy Cars</a>
-        <a href="index.php#sell">Sell Your Car</a>
+        <a href="sell.php">Sell Your Car</a>
         <a href="index.php#about">About</a>
     </nav>
 
@@ -68,6 +95,17 @@ if (!$car) {
 <section class="detail-section">
 
 <div class="container">
+<?php if (isset($_GET['listed']) && $_GET['listed'] === '1'): ?>
+
+        <div class="listing-success">
+            ✓ Your car has been listed successfully on DriveDeal.pk.
+        </div>
+
+    <?php endif; ?>
+
+    <a href="index.php#cars" class="back-link">
+        ← Back to vehicle listings
+    </a>
 
     <a href="index.php#cars" class="back-link">
         ← Back to vehicle listings
@@ -76,15 +114,33 @@ if (!$car) {
 
     <div class="detail-grid">
 
-        <div class="detail-image">
+<div class="detail-image">
+
+    <img
+        id="mainCarImage"
+        src="<?= htmlspecialchars($carImages[0]) ?>"
+        alt="<?= htmlspecialchars($car['make'] . ' ' . $car['model']) ?>"
+    >
+
+</div>
+
+<?php if (count($carImages) > 1): ?>
+
+    <div class="car-gallery">
+
+        <?php foreach ($carImages as $image): ?>
 
             <img
-                src="<?= htmlspecialchars($car['image']) ?>?auto=format&fit=crop&w=1200&q=85"
+                src="<?= htmlspecialchars($image) ?>"
                 alt="<?= htmlspecialchars($car['make'] . ' ' . $car['model']) ?>"
+                onclick="document.getElementById('mainCarImage').src=this.src"
             >
 
-        </div>
+        <?php endforeach; ?>
 
+    </div>
+
+<?php endif; ?>
 
         <div class="detail-info">
 
@@ -192,6 +248,19 @@ if (!$car) {
             <p>
                 <?= htmlspecialchars($car['description']) ?>
             </p>
+            <?php if (!empty($car['remarks'])): ?>
+
+    <div class="seller-remarks">
+
+        <h3>Seller Remarks</h3>
+
+        <p>
+            <?= nl2br(htmlspecialchars($car['remarks'])) ?>
+        </p>
+
+    </div>
+
+<?php endif; ?>
 
 
             <p class="demo-warning">
@@ -227,6 +296,13 @@ if (!$car) {
                 <span>
                     📞 <?= htmlspecialchars($car['owner_phone']) ?>
                 </span>
+                <?php if (!empty($car['owner_email'])): ?>
+
+    <span>
+        ✉ <?= htmlspecialchars($car['owner_email']) ?>
+    </span>
+
+<?php endif; ?>
 
             </div>
 
@@ -234,6 +310,17 @@ if (!$car) {
             <a href="tel:<?= htmlspecialchars($car['owner_phone']) ?>">
                 Contact Seller
             </a>
+           
+            <?php if (!empty($car['owner_email'])): ?>
+
+    <a
+        href="mailto:<?= htmlspecialchars($car['owner_email']) ?>"
+        class="email-seller-btn"
+    >
+        Email Seller
+    </a>
+
+<?php endif; ?>
 
         </div>
 
@@ -248,7 +335,7 @@ if (!$car) {
 
 <div class="copyright">
 
-    © <?= date("Y") ?> AutoDrive —
+© <?= date("Y") ?> DriveDeal.pk , Buy Smart. Sell Fast. Drive Happy.
     Docker Car Marketplace Demo
 
 </div>

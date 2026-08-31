@@ -595,3 +595,161 @@ footer {
     }
 
 }
+
+/* =========================
+   DriveDeal.pk Header Logo
+========================= */
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.brand-logo img {
+    width: 180px;
+    height: 60px;
+    object-fit: contain;
+    display: block;
+}
+
+/* =========================
+   DriveDeal.pk Sell Car Form
+========================= */
+
+.sell-page {
+    padding: 70px 0;
+    background: #f5f6f8;
+    min-height: 100vh;
+}
+
+.sell-page-heading {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.sell-page-heading .small-heading {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.sell-page-heading h1 {
+    font-size: 42px;
+    margin: 10px 0;
+}
+
+.sell-page-heading p {
+    max-width: 650px;
+    margin: auto;
+}
+
+.car-listing-form {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.form-section {
+    background: #ffffff;
+    padding: 30px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.form-section h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 22px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #d8dce2;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #222;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.upload-box {
+    border: 2px dashed #c9cdd3;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.upload-box input {
+    display: block;
+    margin: 18px auto;
+}
+
+.upload-box p {
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+.submit-area {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.submit-car-btn {
+    border: none;
+    padding: 15px 40px;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.submit-area p {
+    font-size: 12px;
+    margin-top: 15px;
+}
+
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-section {
+        padding: 20px;
+    }
+
+    .sell-page-heading h1 {
+        font-size: 32px;
+    }
+}

@@ -39,7 +39,7 @@ $result = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AutoDrive | Premium Car Marketplace</title>
+    <title>DriveDeal.pk | Premium Car Marketplace</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -49,19 +49,19 @@ $result = $stmt->get_result();
 <header>
     <div class="container nav">
 
-        <div class="logo">
-            Auto<span>Drive</span>
-        </div>
+        <a href="index.php" class="brand-logo">
+    <img src="logo.png" alt="DriveDeal.pk">
+</a>
 
         <nav>
             <a href="index.php">Home</a>
             <a href="#cars">Buy Cars</a>
-            <a href="#sell">Sell Your Car</a>
+            <a href="sell.php">Sell Your Car</a>
             <a href="#about">About</a>
         </nav>
 
-        <a href="#sell" class="sell-btn">
-            + Sell Your Car
+        <a href="#sell.php" class="sell-btn">
+                + List Your Car
         </a>
 
     </div>
@@ -351,7 +351,7 @@ $result = $stmt->get_result();
     <div>
 
         <p class="small-heading">
-            WHY AUTODRIVE?
+            WHY DRIVEDEAL.PK?
         </p>
 
         <h2>
@@ -359,9 +359,7 @@ $result = $stmt->get_result();
         </h2>
 
         <p>
-            AutoDrive is a demonstration vehicle marketplace
-            designed to connect buyers and sellers through a
-            modern and easy-to-use platform.
+            DriveDeal.pk is a modern vehicle marketplace designed to connect car buyers and sellers across Pakistan.
         </p>
 
     </div>
@@ -445,10 +443,7 @@ $result = $stmt->get_result();
 
 
 <div class="copyright">
-
-    © <?= date("Y") ?> AutoDrive —
-    Docker Car Marketplace Demo
-
+    © <?= date("Y") ?> DriveDeal.pk , Buy Smart. Sell Fast. Drive Happy.
 </div>
 
 </footer>
