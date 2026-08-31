@@ -1,0 +1,30 @@
+services:
+  web:
+    build: .
+    container_name: car-web
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      DB_HOST: db
+      DB_NAME: cars_db
+      DB_USER: caruser
+      DB_PASSWORD: carpassword
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.4
+    container_name: car-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: cars_db
+      MYSQL_USER: caruser
+      MYSQL_PASSWORD: carpassword
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - car_db_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  car_db_data:
