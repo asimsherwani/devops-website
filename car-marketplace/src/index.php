@@ -60,7 +60,7 @@ $result = $stmt->get_result();
             <a href="#about">About</a>
         </nav>
 
-        <a href="#sell.php" class="sell-btn">
+        <a href="sell.php" class="sell-btn">
                 + List Your Car
         </a>
 
