@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f5ef" />
+    <meta name="description" content="Morrow is a calm AI speaking practice space for everyday English." />
+    <title>Morrow English | Speak with confidence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .auth-link{border:0;background:none;color:var(--deep-green);font-size:11px;font-weight:700;padding:12px 0 0;display:block}
+      .learning-section{padding:0 0 72px}.learning-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:15px}.learning-panel{background:#eef3ec;border:1px solid #dce6dc;padding:27px}.learning-panel h3{font-family:Fraunces,serif;font-size:28px;margin:0 0 10px}.learning-panel p{color:var(--muted);font-size:12px;line-height:1.6;margin:0}.lesson-list{display:grid;gap:10px;margin-top:20px}.lesson-item{border:0;background:var(--white);padding:13px;text-align:left;display:flex;align-items:center;justify-content:space-between;color:var(--ink);font-size:12px}.lesson-item span{color:var(--deep-green);font-size:17px}.profile-summary{background:#f4d4c0;border:1px solid #efd0bc;padding:27px}.profile-summary h3{font-family:Fraunces,serif;font-size:27px;margin:0 0 14px}.profile-summary p{font-size:12px;color:#745f55;line-height:1.6;margin:0 0 8px}.profile-summary strong{color:var(--ink)}
+      .account-menu{position:absolute;right:42px;top:76px;width:190px;background:var(--white);border:1px solid var(--line);box-shadow:var(--shadow);padding:7px;z-index:4;display:none}.account-menu.open{display:block}.account-menu button{border:0;background:none;width:100%;padding:11px;text-align:left;font-size:11px;color:var(--ink);display:flex;justify-content:space-between}.account-menu button:hover{background:#eef3ec;color:var(--deep-green)}.plans-section{padding:0 0 75px}.plan-note{font-size:11px;color:var(--muted)}.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.plan-card{position:relative;border:1px solid var(--line);background:var(--white);padding:24px;text-align:left;min-height:190px;display:flex;flex-direction:column;align-items:flex-start;gap:8px;color:var(--ink);transition:.2s}.plan-card:hover,.plan-card.selected{border-color:var(--deep-green);transform:translateY(-3px);box-shadow:var(--shadow)}.plan-card strong{font-family:Fraunces,serif;font-size:25px;font-weight:600}.plan-card small{font-size:11px;color:var(--muted)}.plan-card b{font-size:16px;margin-top:15px}.plan-card i{font-size:10px;font-weight:400;color:var(--muted);font-style:normal}.plan-select{font-size:11px;font-weight:700;color:var(--deep-green);margin-top:auto}.plan-badge{position:absolute;right:14px;top:14px;text-transform:uppercase;font-size:8px;letter-spacing:.1em;color:#b76d4c}.selected-plan{text-align:center;color:var(--deep-green);font-size:11px;margin:18px 0 0}
+      @media(max-width:760px){.learning-grid,.plans-grid{grid-template-columns:1fr}.learning-section{padding-bottom:50px}.account-menu{right:20px}}
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#home" aria-label="Morrow English home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="brand-name">morrow<span>.</span></span>
+        </a>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a class="active" href="#home">Today</a>
+          <a href="#practice">Practice</a>
+          <a href="#lessons">Lessons</a>
+          <a href="#plans">Plans</a>
+          <a href="#progress">Progress</a>
+        </nav>
+        <button class="profile-button" id="profileButton" type="button" aria-label="Open profile menu" aria-expanded="false">
+          <span class="avatar" id="avatar">G</span><span id="profileLabel">Guest</span><span class="chevron">⌄</span>
+        </button>
+        <div class="account-menu" id="accountMenu"><button id="menuProfile" type="button">My learner profile <span>→</span></button><button id="logoutButton" type="button">Log out <span>↗</span></button></div>
+      </header>
+
+      <main id="home">
+        <section class="hero-section">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="status-dot"></span> Your daily speaking space</p>
+            <h1>Find your voice<br /><em>in English.</em></h1>
+            <p class="hero-text">A little practice, every day. Talk with your AI partner, get gentle feedback, and make English feel like yours.</p>
+            <button class="google-button" id="authButton" type="button"><span class="google-g">↗</span><span id="authButtonText">Create your account</span><span class="button-arrow">→</span></button>
+            <p class="microcopy" id="authNote">Your account and progress stay on this device</p>
+            <button class="auth-link" id="signinLink" type="button">Already have an account? Sign in</button>
+          </div>
+          <div class="hero-art" aria-label="Illustration of a sunrise and a conversation bubble">
+            <div class="sun"></div><div class="hill hill-back"></div><div class="hill hill-front"></div>
+            <div class="speech-bubble">Good morning!<br /><strong>Ready to talk?</strong></div>
+            <div class="art-caption"><span class="caption-line"></span> AI conversation partner</div>
+          </div>
+        </section>
+
+        <section class="streak-strip" id="progress">
+          <div class="streak-copy"><span class="flame">✦</span><div><strong>3 day streak</strong><span>Keep the rhythm going</span></div></div>
+          <div class="week-dots" aria-label="Weekly practice progress"><span class="done">M</span><span class="done">T</span><span class="done">W</span><span> T </span><span>F</span><span>S</span><span>S</span></div>
+          <div class="minutes"><strong>12</strong><span>min practiced this week</span></div>
+        </section>
+
+        <section class="practice-section" id="practice">
+          <div class="section-heading"><div><p class="eyebrow">Choose your moment</p><h2>What feels useful today?</h2></div><button class="text-button" id="randomPractice" type="button">Surprise me <span>↗</span></button></div>
+          <div class="practice-grid">
+            <button class="practice-card card-mint" data-topic="Everyday chat" type="button"><span class="card-icon">◌</span><span class="card-copy"><strong>Everyday chat</strong><small>Talk about your day</small></span><span class="card-time">5 min</span><span class="card-arrow">→</span></button>
+            <button class="practice-card card-peach" data-topic="Work & ideas" type="button"><span class="card-icon">⌁</span><span class="card-copy"><strong>Work & ideas</strong><small>Share thoughts clearly</small></span><span class="card-time">8 min</span><span class="card-arrow">→</span></button>
+            <button class="practice-card card-lilac" data-topic="Real-life moments" type="button"><span class="card-icon">✣</span><span class="card-copy"><strong>Real-life moments</strong><small>Practice what matters</small></span><span class="card-time">10 min</span><span class="card-arrow">→</span></button>
+          </div>
+        </section>
+
+        <section class="learning-section" id="lessons">
+          <div class="learning-grid">
+            <div class="learning-panel"><p class="eyebrow">Your learning path</p><h3>Build confidence, one conversation at a time.</h3><p>Short lessons prepare you for the moments where English matters most. Choose a lesson, then practice it out loud with your coach.</p><div class="lesson-list"><button class="lesson-item" data-topic="Introductions & small talk" type="button">Introductions & small talk <span>→</span></button><button class="lesson-item" data-topic="Clear pronunciation" type="button">Clear pronunciation <span>→</span></button><button class="lesson-item" data-topic="Tell a better story" type="button">Tell a better story <span>→</span></button></div></div>
+            <div class="profile-summary"><p class="eyebrow">Coach notes</p><h3 id="coachTitle">Make your practice personal</h3><p id="coachSummary">Create an account so your coach can remember your level, goals, and favorite topics.</p></div>
+          </div>
+        </section>
+
+        <section class="plans-section" id="plans"><div class="section-heading"><div><p class="eyebrow">Choose your rhythm</p><h2>A plan that fits your week.</h2></div><span class="plan-note">Change anytime</span></div><div class="plans-grid"><button class="plan-card" data-plan="Steady" data-detail="3 conversations each week" type="button"><span class="plan-badge">Popular</span><strong>Steady</strong><small>3 conversations each week</small><b>10 min <i>/ session</i></b><span class="plan-select">Choose plan →</span></button><button class="plan-card" data-plan="Daily" data-detail="A focused conversation every day" type="button"><strong>Daily</strong><small>A focused conversation every day</small><b>15 min <i>/ session</i></b><span class="plan-select">Choose plan →</span></button><button class="plan-card" data-plan="Deep dive" data-detail="Long-form coaching for fast progress" type="button"><strong>Deep dive</strong><small>Long-form coaching for fast progress</small><b>25 min <i>/ session</i></b><span class="plan-select">Choose plan →</span></button></div><p class="selected-plan" id="selectedPlan">No plan selected yet.</p></section>
+
+        <section class="quote-section"><span class="quote-mark">“</span><blockquote>You don’t need perfect English.<br /><em>You need a place to practice.</em></blockquote><span class="quote-author">— Your Morrow coach</span></section>
+      </main>
+
+      <footer><span>morrow<span class="footer-dot">.</span></span><span>Small steps. Real conversations.</span><span>Made for curious minds</span></footer>
+    </div>
+
+    <div class="modal-backdrop" id="practiceModal" aria-hidden="true">
+      <section class="practice-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="close-button" id="closeModal" type="button" aria-label="Close practice">×</button>
+        <p class="eyebrow">Speaking room</p><h2 id="modalTitle">Everyday chat</h2><p class="modal-intro">Take a breath, then answer naturally. Your AI partner is listening.</p>
+        <div class="conversation" id="conversation"><div class="message ai-message"><span class="message-avatar">m.</span><p>Tell me one good thing about your day so far.</p></div></div>
+        <div class="record-area"><button class="record-button" id="recordButton" type="button"><span class="record-icon">●</span><span id="recordLabel">Tap to speak</span></button><p id="recordStatus">Your voice stays in this browser.</p></div>
+        <div class="modal-actions"><button class="secondary-button" id="skipButton" type="button">Skip question</button><button class="primary-button" id="finishButton" type="button">Finish practice <span>→</span></button></div>
+      </section>
+    </div>
+    <div class="modal-backdrop" id="authModal" aria-hidden="true">
+      <section class="practice-modal auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+        <button class="close-button" id="closeAuth" type="button" aria-label="Close account form">×</button>
+        <p class="eyebrow">Your learning space</p><h2 id="authTitle">Create your account</h2>
+        <p class="modal-intro">Save your practice and help your AI coach make every conversation feel relevant.</p>
+        <div class="auth-tabs"><button class="auth-tab active" data-auth-mode="signup" type="button">Create account</button><button class="auth-tab" data-auth-mode="signin" type="button">Sign in</button></div>
+        <form id="authForm">
+          <label>Full name<input id="nameInput" type="text" placeholder="Your name" autocomplete="name" required /></label>
+          <label>Email or user ID<input id="userIdInput" type="text" placeholder="you@example.com" autocomplete="username" required /></label>
+          <label>Password<input id="passwordInput" type="password" placeholder="At least 6 characters" minlength="6" autocomplete="new-password" required /></label>
+          <div id="profileFields" class="profile-fields"><p class="form-divider">Tell your coach about you</p><div class="form-row"><label>English level<select id="levelInput"><option>Beginner</option><option selected>Intermediate</option><option>Upper-intermediate</option><option>Advanced</option></select></label><label>Native language<input id="languageInput" type="text" placeholder="e.g. Hindi" /></label></div><label>Your speaking goal<select id="goalInput"><option>Everyday confidence</option><option>Work and interviews</option><option>Travel conversations</option><option>Pronunciation</option></select></label><label>Topics you enjoy<input id="interestsInput" type="text" placeholder="e.g. movies, technology, food" /></label><label class="checkbox-label"><input id="correctionInput" type="checkbox" checked /> Give me gentle corrections while I speak</label></div>
+          <button class="primary-button form-submit" type="submit"><span id="authSubmitText">Create account</span><span>→</span></button>
+        </form>
+        <p class="form-note">Demo accounts are stored locally in this browser. Use a secure backend before launching publicly.</p>
+      </section>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
